@@ -1,0 +1,25 @@
+kind: Suite
+apiVersion: test.gatekeeper.sh/v1alpha1
+metadata:
+  name: storageclassrestrictpvcs
+tests:
+- name: storageclassrestrictpvcs
+  template: template.yaml
+  constraint: samples/storageclassrestrictpvcs/constraint.yaml
+  cases:
+  - name: example-allowed-pvc-name
+    object: samples/storageclassrestrictpvcs/example_allowed_pvc_name.yaml
+    assertions:
+    - violations: no
+  - name: example-allowed-pvc-sc
+    object: samples/storageclassrestrictpvcs/example_allowed_pvc_sc.yaml
+    assertions:
+    - violations: no
+  - name: example-disallowed-pvc-name-1
+    object: samples/storageclassrestrictpvcs/example_disallowed_pvc_name_1.yaml
+    assertions:
+    - violations: yes
+  - name: example-disallowed-pvc-name-2
+    object: samples/storageclassrestrictpvcs/example_disallowed_pvc_name_2.yaml
+    assertions:
+    - violations: yes
